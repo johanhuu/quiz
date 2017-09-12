@@ -24,8 +24,8 @@ public class QuizView extends JFrame{
 	
 	//Quiz data
 	private int questionCount = 1;
-	private int totalQuestions = 20;
-	private QuizModel qm = new QuizModel();
+	private int numberOfQuestions = 5;
+	private QuizModel qm = new QuizModel(numberOfQuestions);
 	private String selectedAnswer = "";
 	private int correctAnswers = 0;
 	private String currentQuestion = "";
@@ -37,9 +37,9 @@ public class QuizView extends JFrame{
 	private JPanel bottom = new JPanel(new GridLayout(2, 1));
 	
 	//Labels
-	private JLabel topInfo = new JLabel("Question " + questionCount + "/" + totalQuestions);
+	private JLabel topInfo = new JLabel("Question " + questionCount + "/" + numberOfQuestions);
 	private JLabel question = new JLabel("ask something");
-	private JLabel bottomInfo = new JLabel("Pass/Fail");
+	private JLabel bottomInfo = new JLabel("");
 	
 	//Buttons
 	private ButtonGroup bg = new ButtonGroup();
@@ -95,6 +95,7 @@ public class QuizView extends JFrame{
 		submit.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if(selectedAnswer.equals("")) {
+					bottomInfo.setForeground(Color.BLACK);
 					bottomInfo.setText("Select an option before submitting!");
 				}else if(submit.getText().equals("Next question")) {
 					askQuestion();
@@ -102,8 +103,8 @@ public class QuizView extends JFrame{
 					bottomInfo.setText("");
 					bg.clearSelection();
 					questionCount++;
-					topInfo.setText("Question " + questionCount + "/" + totalQuestions);
-					//TODO - provide feedback when all questions have been answered.
+					topInfo.setText("Question " + questionCount + "/" + numberOfQuestions);
+					selectedAnswer = "";
 				}else {
 					if(selectedAnswer.equals(currentAnswer)) {
 						bottomInfo.setForeground(Color.GREEN);
@@ -113,41 +114,49 @@ public class QuizView extends JFrame{
 						bottomInfo.setForeground(Color.RED);
 						bottomInfo.setText("Incorrect answer! The right choice was " + currentAnswer);
 					}
+					if(questionCount == numberOfQuestions) {
+						submit.setVisible(false);
+						question.setVisible(false);
+						quizPanel.setVisible(false);
+						topInfo.setText("Test complete");
+						if(correctAnswers >= numberOfQuestions*0.75) {
+							bottomInfo.setForeground(Color.GREEN);
+						}else {
+							bottomInfo.setForeground(Color.RED);
+						}
+						bottomInfo.setText("Your score: " + correctAnswers + "/" + numberOfQuestions);
+					}
 					submit.setText("Next question");
 				}
 			}
 		});
 	}
 	
+	//Generates new questions and updates the GUI
 	private void askQuestion() {
 		String[] qna = qm.getQuestionAndAnswer();
 		currentQuestion = qna[0];
 		question.setText(currentQuestion);
 		currentAnswer = qna[1];
-		Random random = new Random();
 		
-		ArrayList<Integer> questionOptions = new ArrayList<Integer>();
-		questionOptions.add(Integer.parseInt(currentAnswer));
-		//TODO fix
-		questionOptions.add(random.nextInt(Integer.parseInt(currentAnswer)) + random.nextInt(20)-10);
-		questionOptions.add(random.nextInt(Integer.parseInt(currentAnswer)) + random.nextInt(20)-10);
-		questionOptions.add(random.nextInt(Integer.parseInt(currentAnswer))  + random.nextInt(20)-10);
+		//Add all options to an array and then shuffle
+		ArrayList<String> questionOptions = new ArrayList<String>();
+		questionOptions.add(currentAnswer);
+		questionOptions.addAll(Arrays.asList(qm.getIncorrectOptions(currentAnswer)));
 		
 		Collections.shuffle(questionOptions);
 		
+		//Present all options in the GUI
 		for(int i=0; i<questionOptions.size(); i++) {
 			rbuttons[i].setText(questionOptions.get(i).toString());
 		}
 	}
 	
+	//Check which radio button was selected, add the listener to all radio buttons
 	ActionListener rbListener = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			JRadioButton rb = (JRadioButton)e.getSource();
 			selectedAnswer = rb.getText();
-			//System.out.println(rb.getText());
 		}
 	};
-	
-	
-	
 }
