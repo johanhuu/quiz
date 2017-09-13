@@ -3,7 +3,7 @@ import org.testng.annotations.Test;
 
 public class FirstTest {
 	
-	private int numberOfQuestions = 500;
+	private int numberOfQuestions = 40;
 	private DatabaseHandler dbh = new DatabaseHandler(numberOfQuestions, "testDB.db");
 	
 	@Test(description="Create a table in the database, if necessary")
@@ -14,6 +14,7 @@ public class FirstTest {
 	@Test(dependsOnMethods = {"createTable"}, description="Add some data to the database")
 	public void fillDatabase() {
 		Assert.assertTrue(dbh.fillDatabase());
+		System.out.println(dbh.getRowCount());
 	}
 	
 	@Test(dependsOnMethods = {"fillDatabase"}, description="Make sure each question is associated with the correct answer")
@@ -26,8 +27,9 @@ public class FirstTest {
 	
 	@Test(dependsOnMethods = {"checkDatabaseContent"})
 	public void cleanUp() {
-		Assert.assertTrue(dbh.dropDatabase());
-		Assert.assertTrue(dbh.disconnect());
+		
+		//Assert.assertTrue(dbh.dropDatabase());
+		//Assert.assertTrue(dbh.disconnect());
 	}
 	
 	@Test(priority = -1, description="Make sure the helper method is working as intended")

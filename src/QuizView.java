@@ -21,7 +21,7 @@ public class QuizView extends JFrame{
 	
 	//Quiz data
 	private int questionCount = 1;
-	private int numberOfQuestions = 5;
+	private int numberOfQuestions = 30;
 	private QuizModel qm;
 	private String selectedAnswer = "";
 	private int correctAnswers = 0;

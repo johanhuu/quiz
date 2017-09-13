@@ -10,6 +10,7 @@ public class QuizModel {
 	public QuizModel(int numberOfQuestions) {
 		dbh = new DatabaseHandler(numberOfQuestions, "quiz.db");
 		dbh.createDatabase();
+		dbh.fillDatabase();
 		questionID = new ArrayList<Integer>();
 		for(int i=1; i<=numberOfQuestions; i++) {
 			questionID.add(i);

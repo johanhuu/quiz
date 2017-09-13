@@ -11,13 +11,15 @@ public class DatabaseHandler {
 	private Statement s = null;
 	private Random random = new Random();
 	private String[] operation = {" + ", " - ", " * "};
-	int numberOfQuestions;
+	private int numberOfQuestions;
+	private String dbName;
 	
 	public DatabaseHandler(int numberOfQuestions, String dbName) {
 		this.numberOfQuestions = numberOfQuestions;
+		this.dbName = dbName;
 		//Set up the db connection
 		try {
-	        c = DriverManager.getConnection("jdbc:sqlite:"+dbName);
+	        c = DriverManager.getConnection("jdbc:sqlite:"+this.dbName);
 	        s = c.createStatement();
 	    } catch ( Exception e ) {
 	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -41,27 +43,35 @@ public class DatabaseHandler {
 	}
 	
 	public boolean fillDatabase() {
-		for(int i=1; i<=numberOfQuestions; i++) {
-			String selectedOperation = operation[random.nextInt(operation.length)];
-			int firstNumber = random.nextInt(10)+1;
-			int secondNumber = random.nextInt(10)+1;
+		
+		int rowCount = getRowCount();
+		
+		if(numberOfQuestions > rowCount) {
+			int numberOfNewRows = numberOfQuestions-rowCount;
 			
-			String question = Integer.toString(firstNumber) + selectedOperation + Integer.toString(secondNumber);
-			int answer = 0;
-			if(selectedOperation.equals(" + ")) {
-				answer = firstNumber + secondNumber;
-			}else if(selectedOperation.equals(" - ")) {
-				answer = firstNumber - secondNumber;
-			}else {
-				answer = firstNumber * secondNumber;
-			}
-			String insert = "INSERT INTO QNA (ID, QUESTION, ANSWER) VALUES ("+i+", '"+question+"', "+answer+")";
-		    try {
-				s.executeUpdate(insert);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return false;
+			for(int i=rowCount + 1; i<=rowCount + numberOfNewRows; i++) {
+				System.out.println(i);
+				String selectedOperation = operation[random.nextInt(operation.length)];
+				int firstNumber = random.nextInt(10)+1;
+				int secondNumber = random.nextInt(10)+1;
+				
+				String question = Integer.toString(firstNumber) + selectedOperation + Integer.toString(secondNumber);
+				int answer = 0;
+				if(selectedOperation.equals(" + ")) {
+					answer = firstNumber + secondNumber;
+				}else if(selectedOperation.equals(" - ")) {
+					answer = firstNumber - secondNumber;
+				}else {
+					answer = firstNumber * secondNumber;
+				}
+				String insert = "INSERT INTO QNA (ID, QUESTION, ANSWER) VALUES ("+i+", '"+question+"', "+answer+")";
+			    try {
+					s.executeUpdate(insert);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return false;
+				}
 			}
 		}
 		return true;
@@ -121,6 +131,19 @@ public class DatabaseHandler {
 		}
 	}
 	
-	
+	public int getRowCount() {
+		int count = 0;
+		try {
+			ResultSet rs = s.executeQuery("SELECT COUNT(*) FROM QNA");
+			while (rs.next()){
+                count = rs.getInt(1);
+            }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+		return count;
+	}
 	
 }

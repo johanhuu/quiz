@@ -6,7 +6,6 @@ public class Main {
 		// TODO Auto-generated method stub
 		System.out.println("hello maven???");
 		QuizView qw = new QuizView();
-		
 	}
 
 }
