@@ -91,7 +91,7 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">1 method,   1 passed</span>
+                    <span class="method-stats">5 methods,   5 passed</span>
                   </li>
                   <li>
                     <span class="method-list-title passed">Passed methods</span>
@@ -102,7 +102,27 @@
                     <div class="method-list-content passed suite-Test">
                       <span>
                         <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-Test" title="FirstTest" hash-for-method="test">test</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-Test" title="FirstTest" hash-for-method="checkDatabaseContent">checkDatabaseContent</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Test" title="FirstTest" hash-for-method="cleanUp">cleanUp</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Test" title="FirstTest" hash-for-method="createTable">createTable</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Test" title="FirstTest" hash-for-method="fillDatabase">fillDatabase</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Test" title="FirstTest" hash-for-method="testEvaluate">testEvaluate</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content passed suite-Test -->
@@ -125,9 +145,39 @@
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="test">
-                  </a> <!-- test -->
-                  <span class="method-name">test</span>
+                  <a name="checkDatabaseContent">
+                  </a> <!-- checkDatabaseContent -->
+                  <span class="method-name">checkDatabaseContent</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="cleanUp">
+                  </a> <!-- cleanUp -->
+                  <span class="method-name">cleanUp</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="createTable">
+                  </a> <!-- createTable -->
+                  <span class="method-name">createTable</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="fillDatabase">
+                  </a> <!-- fillDatabase -->
+                  <span class="method-name">fillDatabase</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="testEvaluate">
+                  </a> <!-- testEvaluate -->
+                  <span class="method-name">testEvaluate</span>
+                  <em>
+(Make sure the help method is working as intended)                  </em>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
@@ -184,16 +234,32 @@ data.addColumn('number', 'Number');
 data.addColumn('string', 'Method');
 data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
-data.addRows(1);
+data.addRows(5);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'test')
+data.setCell(0, 1, 'fillDatabase')
 data.setCell(0, 2, 'FirstTest')
-data.setCell(0, 3, 35);
+data.setCell(0, 3, 2541);
+data.setCell(1, 0, 1)
+data.setCell(1, 1, 'checkDatabaseContent')
+data.setCell(1, 2, 'FirstTest')
+data.setCell(1, 3, 93);
+data.setCell(2, 0, 2)
+data.setCell(2, 1, 'createTable')
+data.setCell(2, 2, 'FirstTest')
+data.setCell(2, 3, 12);
+data.setCell(3, 0, 3)
+data.setCell(3, 1, 'cleanUp')
+data.setCell(3, 2, 'FirstTest')
+data.setCell(3, 3, 9);
+data.setCell(4, 0, 4)
+data.setCell(4, 1, 'testEvaluate')
+data.setCell(4, 2, 'FirstTest')
+data.setCell(4, 3, 8);
 window.suiteTableData['Test']= { tableData: data, tableDiv: 'times-div-Test'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 35 ms</span>
+              <span class="suite-total-time">Total running time: 2 seconds</span>
               <div id="times-div-Test">
               </div> <!-- times-div-Test -->
             </div> <!-- times-div -->
@@ -221,8 +287,24 @@ return data;
             <div class="chronological-class">
               <div class="chronological-class-name">FirstTest</div> <!-- chronological-class-name -->
               <div class="test-method">
-                <span class="method-name">test</span>
+                <span class="method-name">testEvaluate</span>
                 <span class="method-start">0 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">createTable</span>
+                <span class="method-start">9 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">fillDatabase</span>
+                <span class="method-start">22 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">checkDatabaseContent</span>
+                <span class="method-start">2563 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">cleanUp</span>
+                <span class="method-start">2658 ms</span>
               </div> <!-- test-method -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

@@ -1,6 +1,5 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,8 +8,6 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
-import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -25,7 +22,7 @@ public class QuizView extends JFrame{
 	//Quiz data
 	private int questionCount = 1;
 	private int numberOfQuestions = 5;
-	private QuizModel qm = new QuizModel(numberOfQuestions);
+	private QuizModel qm;
 	private String selectedAnswer = "";
 	private int correctAnswers = 0;
 	private String currentQuestion = "";
@@ -64,7 +61,7 @@ public class QuizView extends JFrame{
 		this.add(top, BorderLayout.NORTH);
 		this.add(bottom, BorderLayout.SOUTH);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		
+		qm = new QuizModel(numberOfQuestions);
 		askQuestion();
 	}
 	

@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
+<testng-results skipped="0" failed="0" ignored="0" total="5" passed="5">
   <reporter-output>
   </reporter-output>
-  <suite name="Test" duration-ms="71" started-at="2017-09-11T08:36:18Z" finished-at="2017-09-11T08:36:18Z">
+  <suite name="Test" duration-ms="2690" started-at="2017-09-13T09:45:50Z" finished-at="2017-09-13T09:45:52Z">
     <groups>
     </groups>
-    <test name="test1" duration-ms="71" started-at="2017-09-11T08:36:18Z" finished-at="2017-09-11T08:36:18Z">
+    <test name="test1" duration-ms="2690" started-at="2017-09-13T09:45:50Z" finished-at="2017-09-13T09:45:52Z">
       <class name="FirstTest">
-        <test-method status="PASS" signature="test()[pri:0, instance:FirstTest@2b80d80f]" name="test" duration-ms="35" started-at="2017-09-11T10:36:18Z" finished-at="2017-09-11T10:36:18Z">
+        <test-method status="PASS" signature="testEvaluate()[pri:-1, instance:FirstTest@60addb54]" name="testEvaluate" duration-ms="8" started-at="2017-09-13T11:45:50Z" description="Make sure the help method is working as intended" finished-at="2017-09-13T11:45:50Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- test -->
+        </test-method> <!-- testEvaluate -->
+        <test-method status="PASS" signature="createTable()[pri:0, instance:FirstTest@60addb54]" name="createTable" duration-ms="12" started-at="2017-09-13T11:45:50Z" finished-at="2017-09-13T11:45:50Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- createTable -->
+        <test-method status="PASS" signature="fillDatabase()[pri:0, instance:FirstTest@60addb54]" name="fillDatabase" duration-ms="2541" started-at="2017-09-13T11:45:50Z" depends-on-methods="FirstTest.createTable" finished-at="2017-09-13T11:45:52Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- fillDatabase -->
+        <test-method status="PASS" signature="checkDatabaseContent()[pri:0, instance:FirstTest@60addb54]" name="checkDatabaseContent" duration-ms="93" started-at="2017-09-13T11:45:52Z" depends-on-methods="FirstTest.fillDatabase" finished-at="2017-09-13T11:45:52Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- checkDatabaseContent -->
+        <test-method status="PASS" signature="cleanUp()[pri:0, instance:FirstTest@60addb54]" name="cleanUp" duration-ms="9" started-at="2017-09-13T11:45:52Z" depends-on-methods="FirstTest.checkDatabaseContent" finished-at="2017-09-13T11:45:52Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- cleanUp -->
       </class> <!-- FirstTest -->
     </test> <!-- test1 -->
   </suite> <!-- Test -->

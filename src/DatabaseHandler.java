@@ -13,38 +13,38 @@ public class DatabaseHandler {
 	private String[] operation = {" + ", " - ", " * "};
 	int numberOfQuestions;
 	
-	public DatabaseHandler(int numberOfQuestions) {
+	public DatabaseHandler(int numberOfQuestions, String dbName) {
 		this.numberOfQuestions = numberOfQuestions;
 		//Set up the db connection
 		try {
-	        c = DriverManager.getConnection("jdbc:sqlite:quiz.db");
+	        c = DriverManager.getConnection("jdbc:sqlite:"+dbName);
 	        s = c.createStatement();
 	    } catch ( Exception e ) {
 	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	        System.exit(0);
 	    }
-		try {
-			createDatabase();
-			//fillDatabase();
-		}catch(Exception e) {
-			System.out.println(e);
-		}
 	}
 	
-	public void createDatabase() throws SQLException {
+	public boolean createDatabase() {
 		String create = "CREATE TABLE IF NOT EXISTS QNA" +
     			"(ID INT PRIMARY KEY NOT NULL," +
     			"QUESTION TEXT NOT NULL," +
     			"ANSWER TEXT NOT NULL)";
-		s.executeUpdate(create);
+		try {
+			s.executeUpdate(create);
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
-	public void fillDatabase() throws SQLException{
+	public boolean fillDatabase() {
 		for(int i=1; i<=numberOfQuestions; i++) {
 			String selectedOperation = operation[random.nextInt(operation.length)];
 			int firstNumber = random.nextInt(10)+1;
 			int secondNumber = random.nextInt(10)+1;
-			System.out.println(selectedOperation);
 			
 			String question = Integer.toString(firstNumber) + selectedOperation + Integer.toString(secondNumber);
 			int answer = 0;
@@ -55,14 +55,19 @@ public class DatabaseHandler {
 			}else {
 				answer = firstNumber * secondNumber;
 			}
-			System.out.println(question);
 			String insert = "INSERT INTO QNA (ID, QUESTION, ANSWER) VALUES ("+i+", '"+question+"', "+answer+")";
-		    s.executeUpdate(insert);
+		    try {
+				s.executeUpdate(insert);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
 		}
+		return true;
 	}
 	
 	public String[] getQuestionAndAnswer(int id) {
-		System.out.println("asdf");
 		String select = "SELECT * FROM QNA WHERE ID="+id;
 	    String[] qna = {"question", "answer"};
 		try {
@@ -72,31 +77,44 @@ public class DatabaseHandler {
 		}catch(Exception e){
 			System.out.println(e);
 		}
-		System.out.println(qna[0]);
-		System.out.println(qna[1]);
 	    return qna;
 	}
 	
-	public void disconnect() throws SQLException {
-		s.close();
-		c.close();
+	public boolean dropDatabase() {
+		String query = "DROP TABLE QNA";
+		try {
+			s.executeUpdate(query);
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
-	public void dropDatabase() throws SQLException {
-		String query = "DROP TABLE IF EXISTS QNA";
-		s.executeUpdate(query);
+	public boolean disconnect() {
+		try {
+			s.close();
+			c.close();
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
-	public void debug() throws SQLException {
+	public void debug() {
 		String select = "SELECT * FROM QNA";
 	    String[] qna = {"question", "answer"};
-	    ResultSet rs = s.executeQuery(select);
 		try {
+			ResultSet rs = s.executeQuery(select);
 			while(rs.next()) {
 				qna[0] = rs.getString("question");
 				qna[1] = rs.getString("answer");
 				System.out.println(qna[0]);
 				System.out.println(qna[1]);
+				System.out.println();
 			}
 		}catch(Exception e){
 			System.out.println(e);
