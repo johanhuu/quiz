@@ -3,9 +3,8 @@
 <suite name="Test">
 	
 	<test name="test1">
-	
 		<classes>
-			<class name="FirstTest" />
+			<class name="test.FirstTest" />
 		</classes>
 	</test>
 

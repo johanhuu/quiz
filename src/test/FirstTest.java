@@ -1,3 +1,6 @@
+package test;
+
+import main.DatabaseHandler;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
